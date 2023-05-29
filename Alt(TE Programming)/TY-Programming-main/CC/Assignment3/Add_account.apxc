@@ -1,10 +1,29 @@
 public class Demo1 {
-    public void CreateAccount(String Name, String Phone) {
-        account acc = new account();
-        acc.Name = Name;
-        acc.Phone = Phone;
-        insert acc;
-        System.debug('Inserted account: '+ acc.Name);
+    public String accountName { get; set; }
+    public String accountPhone { get; set; }
+    
+    public void createAccount() {
+        if (String.isBlank(accountName)) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please enter the Account Name.'));
+            return;
+        }
+        
+        if (String.isBlank(accountPhone)) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please enter the Phone number.'));
+            return;
+        }
+        
+        Account acc = new Account();
+        acc.Name = accountName;
+        acc.Phone = accountPhone;
+        
+        try {
+            insert acc;
+            System.debug('Inserted account: ' + acc.Name);
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Account created successfully.'));
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'An error occurred while creating the account.'));
+        }
     }
 }
 
