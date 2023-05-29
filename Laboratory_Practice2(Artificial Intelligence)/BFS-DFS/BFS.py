@@ -2,8 +2,8 @@ visited = []
 queue = []
 
 def bfs(visited, graph, node):
-    visited.append()
-    queue.append()
+    visited.append(node)
+    queue.append(node)
 
     while queue:
         m = queue.pop(0)
@@ -14,17 +14,17 @@ def bfs(visited, graph, node):
                 visited.append(neighbour)
                 queue.append(neighbour)
 
-#Driver code
-print("Enter the number of nodes in graph")
+# Driver Code
+print("Enter the number of nodes in the graph:")
 num_nodes = int(input())
 
 graph = {}
 for i in range(num_nodes):
-    print("Enter nighbours for node {i}: (seperated by space or press enter)")
-    neighbours = input().split()
-    graph[str[i]] = neighbours
+    print(f"Enter the neighbors for node {i}: (separated by space, or press enter for no neighbors)")
+    neighbors = input().split()
+    graph[str(i)] = neighbors
 
-start_node = input("Enter the start node for Vredth First Search")
+start_node = input("Enter the start node for Breadth-First Search:")
 
-print("Following is the Breadth First Search")
+print("Following is the Breadth-First Search:")
 bfs(visited, graph, start_node)
