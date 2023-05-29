@@ -1,0 +1,13 @@
+<apex:page controller="Demo2">
+    <apex:form>
+        <apex:pageMessages />
+        <apex:pageBlock>
+            <apex:pageBlockSection>
+                <apex:inputText label="New Account Name" value="{!newAccountName}" />
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Update Older Account" action="{!updateOlderAccount}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
