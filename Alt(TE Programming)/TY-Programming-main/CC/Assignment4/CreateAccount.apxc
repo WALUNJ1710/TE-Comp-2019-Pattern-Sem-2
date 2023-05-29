@@ -1,28 +1,39 @@
-public class Demo1 {
-    public String accountName { get; set; }
-    public String accountPhone { get; set; }
+public class CreateAccount {
+    public String name {get; set;}
+    public String phoneNumber {get; set;}
+    public String selectedName {get; set;}
+    public String websiteURL {get; set;}
+    public List<SelectOption> lstNameSel {get; set;}
     
-    public void createAccount() {
-        if (String.isBlank(accountName)) {
+    public CreateAccount(ApexPages.StandardController controller) {
+        lstNameSel = new List<SelectOption>();
+        lstNameSel.add(new SelectOption('','- None -'));
+        lstNameSel.add(new SelectOption('IT','IT'));
+        lstNameSel.add(new SelectOption('MECH','MECH'));
+        lstNameSel.add(new SelectOption('CHEM','CHEM'));
+        lstNameSel.add(new SelectOption('PHARMA','PHARMA')); 
+    }
+    
+    public PageReference createAccount() {
+        if (String.isBlank(name)) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please enter the Account Name.'));
-            return;
+            return null;
         }
         
-        if (String.isBlank(accountPhone)) {
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please enter the Phone number.'));
-            return;
-        }
-        
-        Account acc = new Account();
-        acc.Name = accountName;
-        acc.Phone = accountPhone;
-        
+        Account accountRecord = new Account(Name = name, Phone = phoneNumber, Industry = selectedName, Website = websiteURL);
         try {
-            insert acc;
-            System.debug('Inserted account: ' + acc.Name);
-            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Account created successfully.'));
+            insert accountRecord;
+            PageReference pg = new PageReference('/'+accountRecord.Id);
+            pg.setRedirect(true);
+            return pg;
         } catch (Exception e) {
             ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'An error occurred while creating the account.'));
+            return null;
         }
+    }
+    
+    public PageReference cancelAccount() {
+        PageReference pg = new PageReference('/'+Schema.SObjectType.Account.getKeyPrefix()+'/o');
+        return pg;
     }
 }
