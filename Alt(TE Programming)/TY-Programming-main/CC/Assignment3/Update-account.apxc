@@ -1,13 +1,27 @@
 public class Demo2 {
-    public void UpdateOlderAccount(String Name) {
-        List<Account> oldAccounts = new List<Account>();
-        for(Account acc: [SELECT Name FROM Account WHERE Phone='987654']) {
-            acc.Name = Name;
-            oldAccounts.add(acc);
+    public String newAccountName { get; set; }
+    
+    public void updateOlderAccount() {
+        List<Account> oldAccounts = [SELECT Id, Name FROM Account WHERE Phone = '987654'];
+        
+        if (oldAccounts.isEmpty()) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'No matching accounts found to update.'));
+            return;
         }
-        update oldAccounts;
+        
+        for (Account acc : oldAccounts) {
+            acc.Name = newAccountName;
+        }
+        
+        try {
+            update oldAccounts;
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.INFO, 'Accounts updated successfully.'));
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'An error occurred while updating the accounts.'));
+        }
     }
 }
+
 
 --------------------------------------------------------------------------------------
 
