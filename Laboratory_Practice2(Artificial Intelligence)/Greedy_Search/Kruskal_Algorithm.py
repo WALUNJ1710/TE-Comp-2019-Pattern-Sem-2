@@ -56,6 +56,7 @@ print(mst)
 #Edge: 2 3 4
 #Edge: 3 4 3
 #Edge: done
+#[(0, 2, 1), (1, 2, 2), (3, 4, 3), (2, 3, 4)]
 
 #Enter the number of vertices: 9
 #Enter edges (source, destination, weight). Enter 'done' when finished.
