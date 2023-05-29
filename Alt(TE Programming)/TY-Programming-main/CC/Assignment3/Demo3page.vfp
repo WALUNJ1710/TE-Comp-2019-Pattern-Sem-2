@@ -1,0 +1,10 @@
+<apex:page controller="Demo3">
+    <apex:form>
+        <apex:pageMessages />
+        <apex:pageBlock>
+            <apex:pageBlockButtons>
+                <apex:commandButton value="Delete Account" action="{!deleteAccount}" />
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
