@@ -1,9 +1,9 @@
 public class CreateAccount {
-    public String name {get; set;}
-    public String phoneNumber {get; set;}
-    public String selectedName {get; set;}
-    public String websiteURL {get; set;}
-    public List<SelectOption> lstNameSel {get; set;}
+    public String name { get; set; }
+    public String phoneNumber { get; set; }
+    public String selectedName { get; set; }
+    public String websiteURL { get; set; }
+    public List<SelectOption> lstNameSel { get; set; }
     
     public CreateAccount(ApexPages.StandardController controller) {
         lstNameSel = new List<SelectOption>();
