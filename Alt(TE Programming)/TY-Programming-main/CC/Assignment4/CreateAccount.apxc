@@ -1,41 +1,38 @@
-public class CreateAccount 
-{
+public class CreateAccount {
     public String name {get; set;}
     public String phoneNumber {get; set;}
-    public String selectedname {get; set;}
+    public String selectedName {get; set;}
     public String websiteURL {get; set;}
-    public List<Selectoption> lstnamesel {get; set;}
+    public List<SelectOption> lstNameSel {get; set;}
     
     public CreateAccount(ApexPages.StandardController controller) {
-	lstnamesel = new List<selectoption>();
-        lstnamesel.add(new selectOption('','- None -'));
-        lstnamesel.add(new selectOption('IT','IT'));
-        lstnamesel.add(new selectOption('MECH','MECH'));
-        lstnamesel.add(new selectOption('CHEM','CHEM'));
-        lstnamesel.add(new selectOption('PHARMA','PHARMA')); 
+        lstNameSel = new List<SelectOption>();
+        lstNameSel.add(new SelectOption('','- None -'));
+        lstNameSel.add(new SelectOption('IT','IT'));
+        lstNameSel.add(new SelectOption('MECH','MECH'));
+        lstNameSel.add(new SelectOption('CHEM','CHEM'));
+        lstNameSel.add(new SelectOption('PHARMA','PHARMA')); 
     }
     
     public PageReference createAccount() {
-        System.debug('teset create');
-        if(!String.isEmpty(name)) {
-            Account accountRecord = new Account(Name = name,
-                                                Phone = phoneNumber,
-                                                Industry = selectedname,
-                                                Website = websiteURL);
-						
-            INSERT accountRecord;
+        if (String.isBlank(name)) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Please enter the Account Name.'));
+            return null;
+        }
+        
+        Account accountRecord = new Account(Name = name, Phone = phoneNumber, Industry = selectedName, Website = websiteURL);
+        try {
+            insert accountRecord;
             PageReference pg = new PageReference('/'+accountRecord.Id);
             pg.setRedirect(true);
             return pg;
-        } 
-        else {
-            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'Please enter Account Name'));
+        } catch (Exception e) {
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'An error occurred while creating the account.'));
+            return null;
         }
-        return NULL;
     }
     
-    public PageReference cancelAccount() 
-    {
+    public PageReference cancelAccount() {
         PageReference pg = new PageReference('/'+Schema.SObjectType.Account.getKeyPrefix()+'/o');
         return pg;
     }
